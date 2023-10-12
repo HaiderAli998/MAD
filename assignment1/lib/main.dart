@@ -89,6 +89,7 @@ Row setPicScroll(String img1,String img2,String img3,String img4) {
                               child: SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
                                   child: Wrap(direction: Axis.horizontal,
+                                    spacing: 16.0,  // Adjust the spacing value as needed
                                     children: [
                                       imageBox(img1),
                                       imageBox(img2),
