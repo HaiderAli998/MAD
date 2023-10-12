@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // Name:Haider Ali
 // SAP ID:70069779
 void main() {
@@ -10,9 +11,11 @@ void main() {
             child: Column(
               children: [
                 Padding(
-                    padding: const EdgeInsets.fromLTRB(16.0, 40.0, 16.0, 0.0),
+                    padding: const EdgeInsets.only(top: 20.0),
                     child: Column(children: [
                       //the search field and icon
+                      makeNearbyLoc(),
+                      currentLocationIcon(),
                       makeSearchField(),
                       Divider(
                         height: 20, // divider underneath the search field
@@ -29,6 +32,58 @@ void main() {
             ),
           ))));
 }
+Widget makeNearbyLoc() {
+  return Container(
+    padding: const EdgeInsets.all(10),
+    child: const Row(
+      children: [
+        Text(
+          "Nearby Location",
+          style: TextStyle(
+            color: Colors.grey,
+          ),
+        ),
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Icon(FontAwesomeIcons.bell, color: Colors.black),
+              SizedBox(width: 15),
+              Icon(FontAwesomeIcons.shoppingCart, color: Colors.black),
+              SizedBox(width: 15),
+              Icon(Icons.location_on, color: Colors.black),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+}
+Widget currentLocationIcon() {
+  return Container(
+    padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+    child: const Row(
+      children: [
+        Align(
+          alignment: Alignment.center,
+          child: Row(
+            children: [
+              Icon(Icons.location_on, color: Colors.deepOrange),
+              SizedBox(width: 5),
+              Text(
+                "Hoston, Texas",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              ),
+              SizedBox(width: 5),
+              Icon(FontAwesomeIcons.locationArrow, color: Colors.deepOrange),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
 
 Column makeOneRow() {
   return Column(
@@ -56,14 +111,16 @@ Row makeSearchField() {
                           decoration: InputDecoration(
                             hintText: 'Search Dish or Chef',
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(16.0),
+                              borderRadius: BorderRadius.circular(20.0),
                             ),
                           ),
+                          style: const TextStyle(fontSize: 15.0),
                         ),
                       ),
                       IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.filter_list_alt))
+                        onPressed: () {},
+                        icon: const Icon(Icons.filter_list_alt),
+                      ),
                     ],
                   );
 }
