@@ -37,34 +37,30 @@ class _MyHomePageState extends State<MyHomePage> {
   Color c2 = Colors.black;
   Color c3 = Colors.grey;
   AudioPlayer player = AudioPlayer();
-  String audioasset = 'bb.mp3.mp3';
-  Future<void> initState() async {
-    await rootBundle.load(audioasset);
-
-  }
+  String audioasset = 'bb.mp3';
     Future<void> _changeC1Colour() async {
-      await player.play(audioasset);
 
     setState(() {
       c1=Colors.red;
 
     });
+    await player.play(AssetSource(audioasset));
 
   }
-  void _changeC2Colour(){
-    player.play(AssetSource('bb.mp3'));
+  Future<void> _changeC2Colour() async {
     setState(() {
       c2=Colors.blue;
 
 
     });
+    await player.play(AssetSource(audioasset));
   }
-  void _changeC3Colour(){
-    player.play(AssetSource('bb.mp3'));
+  Future<void> _changeC3Colour() async {
     setState(() {
       c3=Colors.green;
 
     });
+    await player.play(AssetSource(audioasset));
   }
 
 
