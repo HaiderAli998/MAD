@@ -1,4 +1,6 @@
+import 'dart:typed_data';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 void main() {
   runApp(const MyApp());
@@ -34,20 +36,23 @@ class _MyHomePageState extends State<MyHomePage> {
   Color c1 = Colors.grey;
   Color c2 = Colors.black;
   Color c3 = Colors.grey;
-  final player = AudioPlayer();
-  void initState(){
+  AudioPlayer player = AudioPlayer();
+  String audioasset = 'bb.mp3.mp3';
+  Future<void> initState() async {
+    await rootBundle.load(audioasset);
 
   }
-  void _changeC1Colour() {
+    Future<void> _changeC1Colour() async {
+      await player.play(audioasset);
 
     setState(() {
-      player.play(AssetSource('audio/bb.mp3'));
       c1=Colors.red;
 
     });
+
   }
   void _changeC2Colour(){
-    player.play(AssetSource('audio/bb.mp3'));
+    player.play(AssetSource('bb.mp3'));
     setState(() {
       c2=Colors.blue;
 
@@ -55,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
   void _changeC3Colour(){
-    player.play(AssetSource('audio/bb.mp3'));
+    player.play(AssetSource('bb.mp3'));
     setState(() {
       c3=Colors.green;
 
