@@ -30,7 +30,8 @@ void main() {
                     ])),
               ],
             ),
-          ))));
+          ),
+)));
 }
 Widget makeNearbyLoc() {
   return Container(
