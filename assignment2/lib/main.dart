@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
-
+import 'package:path/path.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'SQLite App',
+      title: 'SqLite App',
       home: Scaffold(
         appBar: AppBar(
           title: Text('SQLite App'),
@@ -50,103 +50,25 @@ class _MyListState extends State<MyList> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<void>(
+      // Use a FutureBuilder to wait for the database to open before rendering the UI
       future: openDatabase(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          return FutureBuilder<List<MyItem>>(
-            future: getItems(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else {
-                  List<MyItem>? items = snapshot.data;
-                  return ListView.builder(
-                    itemCount: items?.length ?? 0,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        leading: CircleAvatar(
-                          backgroundImage: AssetImage(items![index].imageUrl),
-                        ),
-                        title: Text('Name: ${items[index].name}'),
-                        subtitle: Text('Desig: ${items[index].designation}'),
-                        trailing: ElevatedButton(
-                          onPressed: () {
-                            // Handle delete button click
-                            // You can remove the item from the database here
-                            deleteItem(items[index].id!);
-                          },
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.red,
-                          ),
-                          child: Text('Delete'),
-                        ),
-                      );
-                    },
-                  );
-                }
-              } else {
-                return CircularProgressIndicator();
-              }
+          // Database is open, you can now build your UI
+          return ListView.builder(
+            itemCount: 0, // Replace with the actual item count
+            itemBuilder: (BuildContext context, int index) {
+              // Build your list items here
+              return ListTile(
+                title: Text('Item $index'),
+              );
             },
           );
         } else {
+          // Database is still loading, you can show a loading indicator
           return CircularProgressIndicator();
         }
       },
     );
-  }
-
-  Future<void> insertItem(MyItem item) async {
-    await database.insert(
-      'my_items',
-      item.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-  }
-
-  Future<List<MyItem>> getItems() async {
-    final List<Map<String, dynamic>> maps = await database.query('my_items');
-
-    return List.generate(maps.length, (index) {
-      return MyItem(
-        id: maps[index]['id'],
-        name: maps[index]['name'],
-        designation: maps[index]['designation'],
-        imageUrl: maps[index]['imageUrl'],
-      );
-    });
-  }
-
-  Future<void> deleteItem(int id) async {
-    await database.delete(
-      'my_items',
-      where: 'id = ?',
-      whereArgs: [id],
-    );
-    setState(() {}); // Refresh the UI after deleting an item
-  }
-}
-
-class MyItem {
-  final int? id;
-  final String name;
-  final String designation;
-  final String imageUrl;
-
-  MyItem({
-    this.id,
-    required this.name,
-    required this.designation,
-    required this.imageUrl,
-  });
-
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'name': name,
-      'designation': designation,
-      'imageUrl': imageUrl,
-    };
   }
 }
