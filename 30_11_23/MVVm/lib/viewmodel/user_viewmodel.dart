@@ -8,4 +8,7 @@ class UserVM{
     UserModel(name: "Ahsan", id: '52222222', domain: 'MAD'),
 
   ];
+  String getData(int i){
+    return "${usermodel[i].id} ${usermodel[i].name} ${usermodel[i].domain}";
+  }
 }

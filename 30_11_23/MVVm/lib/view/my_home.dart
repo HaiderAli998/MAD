@@ -16,6 +16,14 @@ UserVM uservm =UserVM();
         Center(
           child: Column(
             children: [
+          Row(
+          children: [
+              Expanded(child: Text("ID",style: TextStyle(fontSize: 30),)),
+            Expanded(child: Text("Name",style: TextStyle(fontSize: 30),)),
+            Expanded(child: Text("Domain",style: TextStyle(fontSize: 30),)),
+
+          ]),
+
               ListView.builder(
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
@@ -25,9 +33,10 @@ UserVM uservm =UserVM();
                       children: [
                         Row(
                           children: [
-                            Expanded(child: Text('User-Id : ${uservm.usermodel[count].id}',style: TextStyle(fontSize: 30),)),
-                            Expanded(child: Text('User-Name : ${uservm.usermodel[count].name}',style: TextStyle(fontSize: 30),)),
-                            Expanded(child: Text('User-Domain : ${uservm.usermodel[count].domain}',style: TextStyle(fontSize: 30),)),
+                            Expanded(child: Text(uservm.getData(count),style: TextStyle(fontSize: 30),)),
+                            // Expanded(child: Text('User-Name : ${uservm.usermodel[count].name}',style: TextStyle(fontSize: 30),)),
+                            // note this in comments does not follow mvvm because model is in view which is forbidden in mvvm
+                            // Expanded(child: Text('User-Domain : ${uservm.usermodel[count].domain}',style: TextStyle(fontSize: 30),)),
                           ],
                         ),
 
